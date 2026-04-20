@@ -10,7 +10,7 @@ import {
   BundlePricingSection,
   FAQSection,
 } from "../../../components/Sections";
-import { includedItems, materialsList, instructorData, testimonials, allCoursesMap, highlights, outcomes, reassurances, modules, pricingPlans, faqs } from "../../../lib/data";
+import { includedItems, materialsList, instructorData, testimonials, allCoursesMap, highlights, outcomes, reassurances, pricingPlans } from "../../../lib/data";
 import { CheckCircle2, Star } from "lucide-react";
 import Script from "next/script";
 import type { Metadata } from "next";
@@ -92,7 +92,7 @@ export default async function CoursePage({ params }: { params: { slug: string } 
         <ReassuranceSection />
 
         {/* 7. Curriculum Overview */}
-        <CurriculumSection />
+        <CurriculumSection course={courseData} />
 
         {/* 8. What's Included */}
         <section className="section bg-gradient-lavender">
@@ -131,7 +131,7 @@ export default async function CoursePage({ params }: { params: { slug: string } 
         </section>
 
         {/* 10. Learn Apply Earn */}
-        <LearnApplyEarn />
+        <LearnApplyEarn course={courseData} />
 
         {/* 11. Instructor Section */}
         <section className="section">
@@ -173,7 +173,7 @@ export default async function CoursePage({ params }: { params: { slug: string } 
         <BundlePricingSection course={courseData} />
 
         {/* 14. FAQ Section */}
-        <FAQSection />
+        <FAQSection course={courseData} />
 
         {/* 15. Final CTA */}
         <section className="section" style={{ background: "var(--text-primary)", color: "white", textAlign: "center" }}>
@@ -183,9 +183,9 @@ export default async function CoursePage({ params }: { params: { slug: string } 
               Join hundreds of women learning practical skills from home.
             </p>
             <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-              <PaymentButton text="Enroll Now" variant="primary" />
+              <PaymentButton text="Enroll Now" variant="primary" razorpayUrl={courseData.razorpayUrl} />
               <a 
-                href="https://wa.me/something"
+                href="https://api.whatsapp.com/send?phone=%2B918935018962&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn" 

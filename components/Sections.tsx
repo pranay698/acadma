@@ -1,17 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CourseData, highlights, outcomes, reassurances, modules, includedItems, materialsList, instructorData, testimonials, pricingPlans, faqs } from '../lib/data';
+import { highlights, outcomes, reassurances, includedItems, materialsList, instructorData, testimonials, pricingPlans } from '../lib/data';
+import type { CourseDetail } from '../lib/data';
 import { PaymentButton } from './Shared';
 import { CheckCircle2, ChevronDown, ChevronUp, Lock, ArrowRight, BookOpen, Clock, ShieldCheck, PlayCircle, Smile } from 'lucide-react';
 
 // --- Hero Section ---
-export const HeroSection = ({ course }: { course: CourseData }) => {
+export const HeroSection = ({ course }: { course: CourseDetail }) => {
   return (
     <section className="section bg-gradient-hero">
       <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
         <div style={{ display: 'inline-block', padding: '6px 16px', background: 'var(--success-green-light)', color: 'var(--success-green)', borderRadius: '100px', fontWeight: 600, fontSize: '0.85rem', marginBottom: '24px' }}>
-          By {course.instructor} • {course.courseType}
+          By Acadma • {course.courseType}
         </div>
         <h1 className="hero-headline">{course.title}</h1>
         <p style={{ fontSize: '1.2rem', marginBottom: '32px' }}>{course.description}</p>
@@ -26,8 +27,8 @@ export const HeroSection = ({ course }: { course: CourseData }) => {
         </div>
 
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <PaymentButton text="Enroll Now" />
-          <PaymentButton text="Unlock Full Business Bundle" variant="outline" />
+          <PaymentButton text="Enroll Now" razorpayUrl={course.razorpayUrl} />
+          <PaymentButton text="Unlock Full Business Bundle" variant="outline" razorpayUrl={course.razorpayUrl} />
         </div>
 
         <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '16px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
@@ -44,7 +45,7 @@ export const HeroSection = ({ course }: { course: CourseData }) => {
 export const PainToPromise = () => (
   <section className="section">
     <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-      <h2 style={{ fontSize: '1.8rem', fontWeight: 600, marginBottom: '24px', lineHeight: 1.4 }}>
+      <h2 style={{ fontSize: '1.8rem', fontWeight: 600, marginBottom: '48px', lineHeight: 1.4 }}>
         Want to start a creative skill from home, but overwhelmed by materials, mixing ratios, safety concerns, and expensive courses?
       </h2>
       <p style={{ fontSize: '1.1rem' }}>
@@ -94,7 +95,7 @@ export const ReassuranceSection = () => (
 );
 
 // --- Curriculum / Day Wise ---
-export const CurriculumSection = () => {
+export const CurriculumSection = ({ course }: { course: CourseDetail }) => {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
@@ -102,25 +103,22 @@ export const CurriculumSection = () => {
       <div className="container" style={{ maxWidth: '800px' }}>
         <h2 className="section-headline">Curriculum Overview</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {modules.map((mod, idx) => {
+          {course.modules.map((mod, idx) => {
             const isOpen = openIdx === idx;
             return (
               <div key={idx} className="premium-card" style={{ cursor: 'pointer', padding: isOpen ? '24px' : '20px 24px' }} onClick={() => setOpenIdx(isOpen ? null : idx)}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '1px' }}>Day {mod.day}</span>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '1px' }}>Module {idx + 1}</span>
                     <h4 style={{ fontSize: '1.2rem', margin: '4px 0 0' }}>{mod.title}</h4>
                   </div>
                   {isOpen ? <ChevronUp /> : <ChevronDown />}
                 </div>
                 {isOpen && (
                   <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--accent-lavender-light)' }}>
-                    <p style={{ fontWeight: 500 }}>{mod.shortDescription}</p>
-                    <ul style={{ paddingLeft: '20px', margin: 0, color: 'var(--text-secondary)' }}>
-                      {mod.moduleContent.map((point, i) => <li key={i} style={{ marginBottom: '8px' }}>{point}</li>)}
-                    </ul>
+                    <p style={{ fontWeight: 500 }}>{mod.content}</p>
                     <div style={{ marginTop: '16px', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}>
-                       <PlayCircle size={16} /> {mod.durationMinutes} mins
+                       <PlayCircle size={16} /> Course specific insights
                     </div>
                   </div>
                 )}
@@ -134,20 +132,20 @@ export const CurriculumSection = () => {
 };
 
 // --- Learn Apply Earn ---
-export const LearnApplyEarn = () => (
+export const LearnApplyEarn = ({ course }: { course?: CourseDetail }) => (
   <section className="section bg-gradient-lavender">
     <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
       <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '24px' }}>Learn <ArrowRight style={{ verticalAlign: 'middle', margin: '0 12px' }}/> Apply <ArrowRight style={{ verticalAlign: 'middle', margin: '0 12px' }}/> Earn</h2>
       <p style={{ fontSize: '1.2rem', marginBottom: '32px' }}>
         Skill up from home. Build your confidence by creating beautiful, physical products you can gift to loved ones, customize for events, and use to start taking paid orders. A low-risk path into creative entrepreneurship.
       </p>
-      <PaymentButton text="Start Your Journey Today" />
+      <PaymentButton text="Start Your Journey Today" razorpayUrl={course?.razorpayUrl} />
     </div>
   </section>
 );
 
 // --- Bundle Pricing ---
-export const BundlePricingSection = ({ course }: { course: CourseData }) => (
+export const BundlePricingSection = ({ course }: { course: CourseDetail }) => (
    <section className="section">
     <div className="container">
       <h2 className="section-headline">Choose Your Path</h2>
@@ -168,7 +166,7 @@ export const BundlePricingSection = ({ course }: { course: CourseData }) => (
               </li>
             ))}
           </ul>
-          <PaymentButton text="Enroll in Basic" variant="outline" fullWidth />
+          <PaymentButton text="Enroll in Basic" variant="outline" fullWidth razorpayUrl={course.razorpayUrl} />
         </div>
 
         {/* Upsell Bundle Card */}
@@ -188,7 +186,7 @@ export const BundlePricingSection = ({ course }: { course: CourseData }) => (
               </li>
             ))}
           </ul>
-          <PaymentButton text="Unlock All-Access Bundle" variant="primary" fullWidth />
+          <PaymentButton text="Unlock All-Access Bundle" variant="primary" fullWidth razorpayUrl={course.razorpayUrl} />
         </div>
 
       </div>
@@ -197,14 +195,14 @@ export const BundlePricingSection = ({ course }: { course: CourseData }) => (
 );
 
 // --- FAQ Section ---
-export const FAQSection = () => {
+export const FAQSection = ({ course }: { course: CourseDetail }) => {
    const [openIdx, setOpenIdx] = useState<number | null>(0);
    return (
     <section className="section">
       <div className="container" style={{ maxWidth: '800px' }}>
         <h2 className="section-headline">Got Questions?</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {faqs.map((faq, idx) => {
+          {course.faq.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
               <div key={idx} className="premium-card" style={{ cursor: 'pointer', padding: '20px 24px' }} onClick={() => setOpenIdx(isOpen ? null : idx)}>

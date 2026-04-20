@@ -1,29 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 @import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 @theme {
   --font-sans: 'Outfit', sans-serif;
-  --color-brand-navy: #1E1B4B;    /* Ink Blue Navy (from Royal Stamp Logo) */
-  --color-brand-purple: #1F2937;  /* Softened Charcoal */
-  --color-brand-rich-purple: #131433; /* Ultra Deep Ink Blue for gradients */
-  --color-brand-lavender: #E7E5E4; /* Stone 200 (Warm Muted Accent) */
-  --color-brand-gold: #F5B935;    /* Bright Logo Gold */
-  --color-brand-coral: #F43F5E;   /* Real Vibrant Coral */
+  --color-brand-navy: #1E1B4B;
+  --color-brand-purple: #4C1D95;
+  --color-brand-rich-purple: #6B21A8;
+  --color-brand-lavender: #E9D5FF;
+  --color-brand-gold: #E2AD30;
+  --color-brand-coral: #F43F5E;
 }
 
 :root {
   /* Brand Colors Fallbacks */
-  --bg-color: #FAFAF9; /* Stone 50 (Warm Cream) */
-  --text-primary: #1E1B4B; /* Ink Blue */
-  --text-secondary: #44403C; /* Stone 700 (Peaceful organic gray) */
-  --accent-lavender: #D6D3D1; /* Stone 300 */
-  --accent-lavender-light: #F5F5F4; /* Stone 100 */
-  --accent-gold: #F5B935; 
+  --bg-color: #FFFFFF;
+  --text-primary: #1E1B4B; /* Deep Navy Blue */
+  --text-secondary: #4b5563; /* Soft slate/navy for reading */
+  --accent-lavender: #E9D5FF; /* Muted Purple */
+  --accent-lavender-light: #Faf5ff; /* Very light purple/white */
+  --accent-gold: #E2AD30; /* Golden text/accents */
   --success-green: #10B981; 
   --success-green-light: #d1fae5;
   --cta-coral: #F43F5E; 
-  --cta-coral-hover: #E11D48;
+  --cta-coral-hover: #e11d48;
 
   /* Shadows */
   --shadow-sm: 0 4px 12px rgba(47, 29, 79, 0.05);
@@ -40,6 +40,10 @@
   --font-family: 'Outfit', sans-serif;
 }
 
+
+  /* Typography */
+  --font-family: 'Outfit', sans-serif;
+}
 
 html,
 body {

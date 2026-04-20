@@ -1,18 +1,21 @@
 import React from 'react';
-import Link from 'next/link';
+import { Header } from '../../components/Shared';
 
-export default function GenericPage() {
+export default function TermsOfUsePage() {
   return (
-    <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-color)' }}>
-      <div className="premium-card" style={{ textAlign: 'center', maxWidth: '600px' }}>
-        <h1 style={{ color: 'var(--accent-gold)', marginBottom: '16px' }}>Terms of Use</h1>
-        <p style={{ fontSize: '1.2rem', marginBottom: '32px' }}>
-          This page is currently being updated for our new premium experience. 
-        </p>
-        <Link href="/" style={{ padding: '12px 24px', backgroundColor: 'var(--text-primary)', color: 'white', borderRadius: '50px', fontWeight: 600 }}>
-          Return Home
-        </Link>
+    <div className="min-h-screen bg-slate-50">
+      <Header />
+      <div className="container mx-auto py-24 px-6 max-w-3xl prose prose-slate">
+        <h1>Terms of Use</h1>
+        <p><strong>Last Updated:</strong> April 2026</p>
+        <p>By accessing or using the Acadma platform, you agree to be bound by these Terms of Use.</p>
+        <h2>Account Registration</h2>
+        <p>You must provide accurate information when creating an account. You are responsible for maintaining the confidentiality of your login credentials.</p>
+        <h2>Content Ownership</h2>
+        <p>All course materials, videos, and PDFs provided by Acadma are copyrighted and may not be redistributed, resold, or shared without explicit permission.</p>
+        <h2>Refund Policy</h2>
+        <p>Due to the digital nature of our courses, we do not offer refunds once a course has been accessed. Please review course descriptions carefully before purchasing.</p>
       </div>
-    </main>
-  );
+    </div>
+  )
 }

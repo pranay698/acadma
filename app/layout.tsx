@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.acadma.com"),
 };
 
+import { Footer } from "../components/Shared";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="flex flex-col min-h-screen">
+        <div className="flex-1">
+          {children}
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }
