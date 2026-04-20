@@ -67,7 +67,7 @@ export default function ContactUsPage() {
                   Replace the exact form node below with your FreshDesk / Zendesk / Custom JS Plugin if required.
                 */}
                 <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6 flex-1">
-                  <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+                  <input type="hidden" name="access_key" value="be1cfc5b-f586-484e-88e0-c8a9d57ea927" />
                   <input type="hidden" name="subject" value="New Support Ticket" />
                   <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
 
