@@ -1,4 +1,3 @@
-import { CourseDetail } from './types';
 
 export interface CourseModule {
   title: string;

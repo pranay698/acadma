@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   if (!courseData) return { title: 'Course Not Found' };
 
   return {
-    title: `${courseData.title} | ${courseData.platform}`,
+    title: `${courseData.title} | Acadma`,
     description: courseData.description,
     alternates: {
       canonical: `/courses/${courseData.slug}`,
@@ -38,8 +38,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: courseData.description,
       images: [{ url: courseData.thumbnailImage }],
       url: `https://www.acadma.com/courses/${courseData.slug}`,
-      type: "website",
-    }
+      type: "article",
+    },
   };
 }
 
@@ -48,7 +48,7 @@ export default async function CoursePage({ params }: { params: { slug: string } 
   const courseData = allCoursesMap[p.slug];
 
   if (!courseData) {
-    return <div>Course not found</div>;
+    return <div className="p-20 text-center">Course not found. <a href="/">Go home</a></div>;
   }
 
   const jsonLd = {
@@ -58,14 +58,14 @@ export default async function CoursePage({ params }: { params: { slug: string } 
     "description": courseData.description,
     "provider": {
       "@type": "Organization",
-      "name": courseData.platform,
+      "name": "Acadma",
       "sameAs": "https://www.acadma.com"
     },
     "offers": {
       "@type": "Offer",
       "price": courseData.discountPrice,
       "priceCurrency": "INR",
-      "category": courseData.category
+      "category": courseData.courseType
     }
   };
 
