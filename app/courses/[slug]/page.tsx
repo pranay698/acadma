@@ -15,16 +15,21 @@ import { CheckCircle2, Star } from "lucide-react";
 import Script from "next/script";
 import type { Metadata } from "next";
 
+import { getAllCourses, getCourseBySlug } from "../../../lib/db";
+import LeadForm from "../../../components/LeadForm";
+
+export const revalidate = 60;
+
 export async function generateStaticParams() {
-  const slugs = Object.keys(allCoursesMap);
-  return slugs.map((slug) => ({
-    slug: slug,
+  const courses = await getAllCourses();
+  return courses.map((course) => ({
+    slug: course.slug,
   }));
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const p = await params;
-  const courseData = allCoursesMap[p.slug];
+  const courseData = await getCourseBySlug(p.slug);
   if (!courseData) return { title: 'Course Not Found' };
 
   return {
@@ -45,7 +50,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function CoursePage({ params }: { params: { slug: string } }) {
   const p = await params;
-  const courseData = allCoursesMap[p.slug];
+  const courseData = await getCourseBySlug(p.slug);
 
   if (!courseData) {
     return <div className="p-20 text-center">Course not found. <a href="/">Go home</a></div>;
@@ -171,6 +176,13 @@ export default async function CoursePage({ params }: { params: { slug: string } 
 
         {/* 13. Basic vs Full Bundle Comparison */}
         <BundlePricingSection course={courseData} />
+
+        {/* Lead Capture Form */}
+        <section className="section bg-slate-50">
+          <div className="container">
+            <LeadForm courseName={courseData.title} />
+          </div>
+        </section>
 
         {/* 14. FAQ Section */}
         <FAQSection course={courseData} />

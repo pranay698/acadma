@@ -12,8 +12,13 @@ const iconMap: Record<string, React.ReactNode> = {
   HeartHandshake: <HeartHandshake className="icon-gold" size={24} />
 };
 
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+
 // --- Header ---
 export const Header = ({ course }: { course?: any }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header style={{ padding: '20px 0', borderBottom: '1px solid var(--accent-lavender-light)', position: 'sticky', top: 0, background: 'var(--bg-color)', zIndex: 50 }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -31,8 +36,19 @@ export const Header = ({ course }: { course?: any }) => {
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
            <a href="https://www.acadma.in" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }} className="hidden md:block">Dashboard</a>
            <PaymentButton variant="primary" text="Enroll Now" razorpayUrl={course?.razorpayUrl} />
+           <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+             {menuOpen ? <X size={24} /> : <Menu size={24} />}
+           </button>
         </div>
       </div>
+      {menuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 p-4 flex flex-col gap-4 shadow-lg">
+           <a href="/s/store" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>Courses</a>
+           <a href="/sessions" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>Webinars</a>
+           <a href="/membership" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>Membership</a>
+           <a href="https://www.acadma.in" style={{ fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none' }}>Dashboard</a>
+        </div>
+      )}
     </header>
   );
 };
