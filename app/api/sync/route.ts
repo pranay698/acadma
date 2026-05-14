@@ -6,6 +6,8 @@ export async function GET(request: Request) {
     // Revalidate all pages under /courses to purge the cache
     revalidatePath('/courses/[slug]', 'page');
     revalidatePath('/'); // Revalidate home page as well
+    revalidatePath('/sessions');
+    revalidatePath('/membership');
     
     return NextResponse.json({ revalidated: true, now: Date.now() });
   } catch (err) {

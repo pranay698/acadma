@@ -4,7 +4,7 @@ import { google } from 'googleapis';
 // Repository Pattern for Future-Proofing (PostgreSQL ready)
 // Currently uses Google Sheets API, falls back to lib/data.ts if not configured.
 
-export async function getGoogleSheetsData() {
+export async function getGoogleSheetsDataForTab(range: string) {
   if (!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY || !process.env.GOOGLE_SHEET_ID) {
     return null;
   }
@@ -20,17 +20,74 @@ export async function getGoogleSheetsData() {
 
     const sheets = google.sheets({ version: 'v4', auth });
     
-    // Fetch Pages Tab
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'Pages!A2:K', // Assuming Headers are in row 1
+      range: range,
     });
 
     return response.data.values;
   } catch (error) {
-    console.error('Google Sheets API Error:', error);
+    console.error(`Google Sheets API Error for range ${range}:`, error);
     return null;
   }
+}
+
+export async function getGoogleSheetsData() {
+  return getGoogleSheetsDataForTab('Pages!A2:K');
+}
+
+export interface WebinarData {
+  id: string | number;
+  title: string;
+  image: string;
+  date: string;
+  status: string;
+  price: string;
+  type: string;
+  registrationUrl?: string;
+}
+
+export async function getGoogleSheetsWebinars(): Promise<WebinarData[]> {
+  const sheetRows = await getGoogleSheetsDataForTab('Webinars!A2:H');
+  if (!sheetRows || sheetRows.length === 0) return [];
+  
+  return sheetRows.map((row: any, index: number) => ({
+    id: index + 1,
+    title: row[0] || '',
+    image: row[1] || '',
+    date: row[2] || '',
+    status: row[3] || '',
+    price: row[4] || '',
+    type: row[5] || 'past',
+    registrationUrl: row[6] || undefined,
+  }));
+}
+
+export interface MembershipPlan {
+  id: string;
+  title: string;
+  price: number;
+  original: number | null;
+  billed: string;
+  badge: string | null;
+  discount: string | null;
+  razorpayUrl?: string;
+}
+
+export async function getGoogleSheetsMemberships(): Promise<MembershipPlan[]> {
+  const sheetRows = await getGoogleSheetsDataForTab('Memberships!A2:H');
+  if (!sheetRows || sheetRows.length === 0) return [];
+  
+  return sheetRows.map((row: any) => ({
+    id: row[0] || '',
+    title: row[1] || '',
+    price: parseFloat(row[2]) || 0,
+    original: row[3] ? parseFloat(row[3]) : null,
+    billed: row[4] || '',
+    badge: row[5] || null,
+    discount: row[6] || null,
+    razorpayUrl: row[7] || undefined,
+  }));
 }
 
 export async function getAllCourses(): Promise<CourseDetail[]> {
